@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Bike Ride</title>
+    <link type="text/css" rel="stylesheet" href="css/style.css"/>
+</head>
+<body>
+<div id="container">
+    <div class="column">
+        <form id="search">
+            <label for="search-field">Search a city to view the weather</label><br/>
+            <input type="text" name="search-field" id="search-field" />
+            <button id="submit" name="submit" value="submit">Search!</button>
+        </form>
+    </div>
+
+    <div id="forecast" class="column alt">
+
+        <script id="template-error" type="text/template">
+            <span class="error">Oops, something went wrong: <%= message %></span>
+            <br/>
+            <span class="again">Please try again!</span>
+        </script>
+
+        <script id="template-now" type="text/template">
+            <div class="forecast-now">
+                <span class="weather">Current weather is: <%= forecast.weather[0].main %></span>
+                <span class="description"><i>(<%= forecast.weather[0].description %>)</i></span>
+                <br/>
+                Temperature min/max: <span class="temp-min"><%= forecast.main.temp_min%></span> /
+                <span class="temp-max"><%= forecast.main.temp_max %></span>
+                <br/>
+                <span class="speed">Wind speed: <%= forecast.wind.speed %> m/s</span>
+            </div>
+        </script>
+    </div>
+
+    <div class="column">
+        <div id="forecast-five-day">
+            <script id="template-five-day-error" type="text/template">
+                <span class="error">Couldn't load the five day forecast: <%= message %></span>
+                <br/>
+                <span class="again">Please try again!</span>
+            </script>
+
+            <script id="template-five-day" type="text/template">
+                <strong>Weather forecast for each 3 hours in the upcoming five days</strong>
+                <hr>
+                <% _.each(forecasts, function(forecast, index, list){ %>
+                <div class="forecast">
+                    <div class="time">
+                        <%= forecast.getDate(index) %><br/>
+                    </div>
+                    <div class="weather">
+                        <span class="main">Weather: <%= forecast.attributes.weather[0].main %></span>
+                        <span class="description"><i>(<%= forecast.attributes.weather[0].description %>)</i></span>
+                    </div>
+                    <div class="temperature">
+                        Temperature min/max: <span class="temp-min"><%= forecast.attributes.main.temp_min %></span> /
+                        <span class="temp-max"><%= forecast.attributes.main.temp_max %></span>
+                    </div>
+                    <div class="wind">
+                        <span class="speed">Wind speed: <%= forecast.attributes.wind.speed %> m/s</span>
+                    </div>
+                </div>
+                <hr>
+                <% }); %>
+            </script>
+        </div>
+    </div>
+
+</div>
+<script src="dist/bundle.js" type="text/javascript"></script>
+</body>
+</html>
